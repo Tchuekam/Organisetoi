@@ -1,0 +1,170 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and role information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "manager"] },
+        "companyId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "companyId"]
+    },
+    "Prospect": {
+      "title": "Prospect",
+      "description": "Lead or potential client",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "source": { "type": "string", "enum": ["WhatsApp", "Facebook", "Marketplace", "Ads", "Inbox"] },
+        "status": { "type": "string", "enum": ["new", "contacted", "interested", "closed", "cold"] },
+        "companyId": { "type": "string" },
+        "userId": { "type": "string" },
+        "lastContactedAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" }
+      },
+      "required": ["name", "source", "status", "companyId", "userId", "createdAt"]
+    },
+    "Client": {
+      "title": "Client",
+      "description": "Active client",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "companyId": { "type": "string" },
+        "userId": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "companyId", "userId", "createdAt"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Daily task for the CM",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "tag": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "done"] },
+        "companyId": { "type": "string" },
+        "userId": { "type": "string" },
+        "dueDate": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "status", "companyId", "userId"]
+    },
+    "Content": {
+      "title": "Content",
+      "description": "Content piece (Reel, Post, etc.)",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["reel", "image", "story"] },
+        "format": { "type": "string", "enum": ["informatif", "divertissant", "présentatif"] },
+        "status": { "type": "string", "enum": ["draft", "planned", "published"] },
+        "companyId": { "type": "string" },
+        "userId": { "type": "string" },
+        "platform": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["title", "type", "status", "companyId", "userId"]
+    },
+    "CalendarPost": {
+      "title": "CalendarPost",
+      "description": "Scheduled content on the calendar",
+      "type": "object",
+      "properties": {
+        "contentId": { "type": "string" },
+        "scheduledDate": { "type": "string", "format": "date-time" },
+        "companyId": { "type": "string" },
+        "userId": { "type": "string" }
+      },
+      "required": ["contentId", "scheduledDate", "companyId", "userId"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Customer service message tracking",
+      "type": "object",
+      "properties": {
+        "clientId": { "type": "string" },
+        "content": { "type": "string" },
+        "type": { "type": "string", "enum": ["inbound", "outbound"] },
+        "companyId": { "type": "string" },
+        "userId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["clientId", "content", "type", "companyId", "userId", "timestamp"]
+    },
+    "Analytics": {
+      "title": "Analytics",
+      "description": "Daily aggregated stats",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "companyId": { "type": "string" },
+        "leadsCount": { "type": "number" },
+        "conversionRate": { "type": "number" },
+        "responseRate": { "type": "number" },
+        "publishedContentCount": { "type": "number" }
+      },
+      "required": ["date", "companyId"]
+    },
+    "Presence": {
+      "title": "Presence",
+      "description": "User active session tracking",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "companyId": { "type": "string" },
+        "lastActive": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "companyId", "lastActive"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "Client invoice for services",
+      "type": "object",
+      "properties": {
+        "clientName": { "type": "string" },
+        "service": { "type": "string" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["Paid", "Pending", "Overdue"] },
+        "companyId": { "type": "string" },
+        "userId": { "type": "string" }
+      },
+      "required": ["clientName", "service", "amount", "date", "status", "companyId", "userId"]
+    },
+    "Template": {
+      "title": "Template",
+      "description": "Saved outreach message template",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "type": { "type": "string" },
+        "companyId": { "type": "string" },
+        "userId": { "type": "string" }
+      },
+      "required": ["title", "content", "companyId", "userId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/prospects/{prospectId}": { "schema": "Prospect", "description": "Prospect tracking" },
+    "/clients/{clientId}": { "schema": "Client", "description": "Client management" },
+    "/tasks/{taskId}": { "schema": "Task", "description": "Task management" },
+    "/content/{contentId}": { "schema": "Content", "description": "Content creation" },
+    "/calendar_posts/{postId}": { "schema": "CalendarPost", "description": "Editorial calendar" },
+    "/messages/{messageId}": { "schema": "Message", "description": "Message tracking" },
+    "/analytics/{analyticsId}": { "schema": "Analytics", "description": "SaaS analytics" },
+    "/presence/{sessionId}": { "schema": "Presence", "description": "Real-time presence tracking" },
+    "/invoices/{invoiceId}": { "schema": "Invoice", "description": "Client billing" },
+    "/templates/{templateId}": { "schema": "Template", "description": "Outreach templates" }
+  }
+}
